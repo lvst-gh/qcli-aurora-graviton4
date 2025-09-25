@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora切换监控分析报告 - 第二轮测试</title>
+    <script src="https://unpkg.com/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+        if (typeof echarts === 'undefined') {
+            document.write('<script src="https://cdn.staticfile.org/echarts/5.4.3/echarts.min.js"><\/script>');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 600px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+        .summary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .summary h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .summary-section {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #fff;
+        }
+        .summary-section h4 {
+            margin: 0 0 10px 0;
+            color: #fff;
+            font-size: 16px;
+        }
+        .summary-section ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .summary-section li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .metric-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+        .status-success { 
+            color: #27ae60; 
+            font-weight: bold;
+            background: #d5f4e6;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .status-error { 
+            color: #e74c3c; 
+            font-weight: bold;
+            background: #fadbd8;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .status-warning { 
+            color: #f39c12; 
+            font-weight: bold;
+            background: #fdeaa7;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .phase-warmup { background: linear-gradient(90deg, #d5f4e6, #f0f8f0); }
+        .phase-trigger { background: linear-gradient(90deg, #ffeaa7, #fff8e1); }
+        .phase-outage { background: linear-gradient(90deg, #fab1a0, #fce4ec); }
+        .phase-readonly { background: linear-gradient(90deg, #fdcb6e, #fff3e0); }
+        .phase-recovery { background: linear-gradient(90deg, #a29bfe, #f3e5f5); }
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 16px;
+        }
+        .comparison {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #e74c3c;
+        }
+        .comparison h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .comparison-table th {
+            background: #34495e;
+            color: white;
+        }
+        .diff-better { color: #27ae60; font-weight: bold; }
+        .diff-worse { color: #e74c3c; font-weight: bold; }
+        .diff-same { color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Aurora切换监控分析报告 - 第二轮测试</h1>
+        
+        <div class="summary">
+            <h3>📊 测试概览</h3>
+            <p><strong>测试时间:</strong> 2025-09-18 03:24:54 - 03:26:25 (91秒) | <strong>集群:</strong> aurora-failover-test (MySQL 8.0.mysql_aurora.3.10.0) | <strong>切换方向:</strong> reader → writer</p>
+            
+            <div class="summary-grid">
+                <div class="summary-section">
+                    <h4>🏗️ 测试环境</h4>
+                    <ul>
+                        <li>区域: 新加坡 (ap-southeast-1)</li>
+                        <li>堡垒机: EC2 r7g.large (ARM64)</li>
+                        <li>Aurora集群: 2个r7g.2xlarge实例</li>
+                        <li>网络: 同AZ部署，减少网络延迟</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-section">
+                    <h4>🔍 探针设计</h4>
+                    <ul>
+                        <li>MySQL读: SELECT查询心跳表</li>
+                        <li>MySQL写: INSERT心跳记录+COMMIT</li>
+                        <li>DNS解析: dig cluster endpoint</li>
+                        <li>监控间隔: 500ms高频采样</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-section">
+                    <h4>⏱️ 超时设置</h4>
+                    <ul>
+                        <li>MySQL读基线: 50ms (超时100ms)</li>
+                        <li>MySQL写基线: 100ms (超时200ms)</li>
+                        <li>DNS基线: 100ms (超时200ms)</li>
+                        <li>连接超时: 读1秒，写2秒</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-section">
+                    <h4>🔄 测试过程</h4>
+                    <ul>
+                        <li>预热30秒: 建立性能基线</li>
+                        <li>触发切换: 手动failover命令</li>
+                        <li>监控61秒: 捕获完整切换过程</li>
+                        <li>自动停止: 生成分析报告</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">18秒</div>
+                <div class="metric-label">总切换时间</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">8秒</div>
+                <div class="metric-label">读操作中断</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">17秒</div>
+                <div class="metric-label">写操作中断</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">瞬时</div>
+                <div class="metric-label">DNS切换时间</div>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <h3>📊 两轮测试对比分析</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>指标</th>
+                        <th>第一轮测试</th>
+                        <th>第二轮测试</th>
+                        <th>差异</th>
+                        <th>分析</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>总切换时间</strong></td>
+                        <td>20秒</td>
+                        <td>18秒</td>
+                        <td class="diff-better">-2秒</td>
+                        <td>第二轮略快</td>
+                    </tr>
+                    <tr>
+                        <td><strong>连接中断时间</strong></td>
+                        <td>8秒</td>
+                        <td>8秒</td>
+                        <td class="diff-same">一致</td>
+                        <td>高度稳定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>只读模式时间</strong></td>
+                        <td>7秒</td>
+                        <td>9秒</td>
+                        <td class="diff-worse">+2秒</td>
+                        <td>略有波动</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DNS切换时机</strong></td>
+                        <td>写恢复时</td>
+                        <td>写恢复时</td>
+                        <td class="diff-same">一致</td>
+                        <td>原子性切换</td>
+                    </tr>
+                    <tr>
+                        <td><strong>切换方向</strong></td>
+                        <td>writer → reader</td>
+                        <td>reader → writer</td>
+                        <td>-</td>
+                        <td>双向验证</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>📈 时间序列分析</h2>
+        <div id="timeSeriesChart" class="chart-container">
+            <div class="loading">正在加载图表...</div>
+        </div>
+
+        <h2>📋 详细事件日志</h2>
+        <div class="table-container">
+            <table id="eventTable">
+                <thead>
+                    <tr>
+                        <th>时间戳</th>
+                        <th>主线操作</th>
+                        <th>DNS探针 & IP</th>
+                        <th>MySQL读探针</th>
+                        <th>MySQL写探针</th>
+                    </tr>
+                </thead>
+                <tbody id="eventTableBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #e74c3c;">
+            <h3 style="color: #2c3e50; margin-top: 0;">💡 第二轮测试关键发现</h3>
+            <ul style="color: #34495e;">
+                <li><strong>切换一致性:</strong> 连接中断时间稳定在8秒，证明Aurora切换机制的可预测性</li>
+                <li><strong>DNS切换时机:</strong> 与第一轮完全一致，都在写操作恢复时瞬间完成 (03:25:59.500000)</li>
+                <li><strong>只读模式期:</strong> 9秒 vs 第一轮7秒，存在2秒波动，属于正常范围</li>
+                <li><strong>双向切换验证:</strong> reader→writer 和 writer→reader 都遵循相同的切换模式</li>
+                <li><strong>IP变化:</strong> 10.0.1.178 → 10.0.1.215，与第一轮方向相反</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof echarts === 'undefined') {
+                    document.getElementById('timeSeriesChart').innerHTML = 
+                        '<div style="text-align:center;padding:50px;color:#e74c3c;font-size:16px;">' +
+                        '⚠️ ECharts加载失败<br><small>请检查网络连接或刷新页面重试</small></div>';
+                    return;
+                }
+                initChart();
+            }, 1000);
+        });
+
+        function initChart() {
+            const realData = {
+                times: [],
+                dnsStatus: [],
+                readStatus: [],
+                writeStatus: []
+            };
+
+            // 第二轮测试时间范围
+            const startTime = new Date('2025-09-18T03:24:54');
+            const endTime = new Date('2025-09-18T03:26:25');
+            
+            for (let time = new Date(startTime); time <= endTime; time.setSeconds(time.getSeconds() + 1)) {
+                const timeStr = time.toTimeString().substring(0, 8);
+                realData.times.push(timeStr);
+                
+                if (time < new Date('2025-09-18T03:25:24')) {
+                    // 预热阶段
+                    realData.dnsStatus.push(1);
+                    realData.readStatus.push(1);
+                    realData.writeStatus.push(1);
+                } else if (time < new Date('2025-09-18T03:25:42')) {
+                    // 切换触发
+                    realData.dnsStatus.push(1);
+                    realData.readStatus.push(1);
+                    realData.writeStatus.push(1);
+                } else if (time < new Date('2025-09-18T03:25:50')) {
+                    // 连接中断期
+                    realData.dnsStatus.push(1);
+                    realData.readStatus.push(0);
+                    realData.writeStatus.push(0);
+                } else if (time < new Date('2025-09-18T03:25:59')) {
+                    // 只读模式期
+                    realData.dnsStatus.push(1);
+                    realData.readStatus.push(1);
+                    realData.writeStatus.push(0.5); // 只读模式
+                } else {
+                    // 完全恢复期
+                    realData.dnsStatus.push(1);
+                    realData.readStatus.push(1);
+                    realData.writeStatus.push(1);
+                }
+            }
+
+            const chart = echarts.init(document.getElementById('timeSeriesChart'));
+            
+            const option = {
+                title: {
+                    text: 'Aurora切换过程实时监控 - 第二轮测试',
+                    subtext: '基于真实测试数据 (1秒间隔)',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 18,
+                        fontWeight: 'bold'
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(50,50,50,0.9)',
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    formatter: function(params) {
+                        let result = '<strong>' + params[0].name + '</strong><br/>';
+                        
+                        params.forEach(param => {
+                            let status = '';
+                            let color = '';
+                            if (param.seriesName.includes('DNS')) {
+                                status = param.value === 1 ? '正常' : '失败';
+                                color = param.value === 1 ? '#27ae60' : '#e74c3c';
+                            } else if (param.seriesName.includes('读')) {
+                                status = param.value === 1 ? '正常' : '失败';
+                                color = param.value === 1 ? '#27ae60' : '#e74c3c';
+                            } else {
+                                status = param.value === 1 ? '正常' : param.value === 0.5 ? '只读模式' : '失败';
+                                color = param.value === 1 ? '#27ae60' : param.value === 0.5 ? '#f39c12' : '#e74c3c';
+                            }
+                            result += '<span style="color:' + color + '">● ' + param.seriesName + ': ' + status + '</span><br/>';
+                        });
+                        return result;
+                    }
+                },
+                legend: {
+                    data: ['DNS解析', 'MySQL读', 'MySQL写'],
+                    top: 50,
+                    textStyle: {
+                        fontSize: 12
+                    }
+                },
+                grid: {
+                    left: '5%',
+                    right: '5%',
+                    bottom: '15%',
+                    top: '20%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: realData.times,
+                    axisLabel: {
+                        interval: 5,
+                        rotate: 45,
+                        fontSize: 10
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#666'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 1,
+                    axisLabel: {
+                        formatter: function(value) {
+                            if (value === 1) return '正常';
+                            if (value === 0.5) return '只读';
+                            return '失败';
+                        },
+                        fontSize: 10
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#666'
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#eee'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'DNS解析',
+                        type: 'line',
+                        data: realData.dnsStatus,
+                        itemStyle: { color: '#3498db' },
+                        lineStyle: { width: 3 },
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        smooth: true,
+                        markLine: {
+                            data: [
+                                {
+                                    name: '切换触发',
+                                    xAxis: '03:25:24',
+                                    lineStyle: { color: '#f39c12', width: 2, type: 'dashed' },
+                                    label: { formatter: '切换触发', position: 'end' }
+                                },
+                                {
+                                    name: 'DNS切换',
+                                    xAxis: '03:25:59',
+                                    lineStyle: { color: '#9b59b6', width: 2, type: 'dashed' },
+                                    label: { formatter: 'DNS切换', position: 'end' }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'MySQL读',
+                        type: 'line',
+                        data: realData.readStatus,
+                        itemStyle: { color: '#27ae60' },
+                        lineStyle: { width: 3 },
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        smooth: true
+                    },
+                    {
+                        name: 'MySQL写',
+                        type: 'line',
+                        data: realData.writeStatus,
+                        itemStyle: { color: '#e74c3c' },
+                        lineStyle: { width: 3 },
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        smooth: true
+                    }
+                ]
+            };
+
+            chart.setOption(option);
+            window.addEventListener('resize', function() {
+                chart.resize();
+            });
+        }
+
+        // 生成详细事件表格 - 第二轮测试数据
+        const eventTableData = [
+            { time: '03:24:54', phase: '预热开始', dns: '正常 (10.0.1.178)', read: '正常 (~2ms)', write: '正常 (~3ms)' },
+            { time: '03:25:24', phase: '切换触发', dns: '正常 (10.0.1.178)', read: '正常 (~2ms)', write: '正常 (~3ms)' },
+            { time: '03:25:42', phase: '连接中断', dns: '正常 (10.0.1.178)', read: '连接拒绝', write: '连接拒绝' },
+            { time: '03:25:44', phase: '连接中断', dns: '正常 (10.0.1.178)', read: '连接拒绝', write: '连接拒绝' },
+            { time: '03:25:46', phase: '连接中断', dns: '正常 (10.0.1.178)', read: '连接拒绝', write: '连接拒绝' },
+            { time: '03:25:48', phase: '连接中断', dns: '正常 (10.0.1.178)', read: '连接拒绝', write: '连接拒绝' },
+            { time: '03:25:50', phase: '读恢复', dns: '正常 (10.0.1.178)', read: '恢复 (~16ms)', write: '只读模式 (1836错误)' },
+            { time: '03:25:52', phase: '只读模式', dns: '正常 (10.0.1.178)', read: '正常 (~2ms)', write: '只读模式 (1836错误)' },
+            { time: '03:25:54', phase: '只读模式', dns: '正常 (10.0.1.178)', read: '正常 (~2ms)', write: '只读模式 (1836错误)' },
+            { time: '03:25:56', phase: '只读模式', dns: '正常 (10.0.1.178)', read: '正常 (~2ms)', write: '只读模式 (1836错误)' },
+            { time: '03:25:58', phase: '只读模式', dns: '正常 (10.0.1.178)', read: '正常 (~2ms)', write: '只读模式 (1836错误)' },
+            { time: '03:25:59', phase: '写恢复+DNS切换', dns: 'IP变化→10.0.1.215', read: '正常 (~2ms)', write: '恢复 (~3ms)' },
+            { time: '03:26:01', phase: '完全恢复', dns: '正常 (10.0.1.215)', read: '正常 (~2ms)', write: '正常 (~3ms)' },
+            { time: '03:26:15', phase: '完全恢复', dns: '正常 (10.0.1.215)', read: '正常 (~2ms)', write: '正常 (~3ms)' },
+            { time: '03:26:25', phase: '监控结束', dns: '正常 (10.0.1.215)', read: '正常 (~2ms)', write: '正常 (~3ms)' }
+        ];
+
+        const tableBody = document.getElementById('eventTableBody');
+        eventTableData.forEach(row => {
+            const tr = document.createElement('tr');
+            
+            if (row.phase.includes('预热')) tr.className = 'phase-warmup';
+            else if (row.phase.includes('切换') || row.phase.includes('触发')) tr.className = 'phase-trigger';
+            else if (row.phase.includes('中断')) tr.className = 'phase-outage';
+            else if (row.phase.includes('只读') || row.phase.includes('读恢复')) tr.className = 'phase-readonly';
+            else if (row.phase.includes('恢复') || row.phase.includes('DNS')) tr.className = 'phase-recovery';
+            
+            tr.innerHTML = `
+                <td><strong>${row.time}</strong></td>
+                <td><strong>${row.phase}</strong></td>
+                <td class="${row.dns.includes('变化') ? 'status-warning' : 'status-success'}">${row.dns}</td>
+                <td class="${row.read.includes('拒绝') ? 'status-error' : row.read.includes('16ms') ? 'status-warning' : 'status-success'}">${row.read}</td>
+                <td class="${row.write.includes('拒绝') ? 'status-error' : row.write.includes('只读') ? 'status-warning' : 'status-success'}">${row.write}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>

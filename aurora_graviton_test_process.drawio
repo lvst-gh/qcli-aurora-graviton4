@@ -1,0 +1,253 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Aurora Graviton Test Process" id="testprocess">
+    <mxGraphModel dx="1359" dy="748" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Aurora Graviton 性能测试流程图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#2c3e50" parent="1" vertex="1">
+          <mxGeometry x="505" y="32" width="370" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="start" value="开始测试" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="650" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage1" value="阶段1&#xa;基础设施创建&#xa;(10-15分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="620" y="180" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage2" value="阶段2&#xa;环境配置&#xa;(5分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="620" y="280" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage3" value="阶段3&#xa;数据准备&#xa;(15-20分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="620" y="380" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage4" value="阶段4&#xa;性能测试循环&#xa;(45分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="620" y="480" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage5" value="阶段5&#xa;结果收集&#xa;(2分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="620" y="580" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage6" value="阶段6&#xa;报告生成&#xa;(3分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4edda;strokeColor=#82b366;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="620" y="680" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stage7" value="阶段7&#xa;资源清理&#xa;(5分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="420" y="680" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="end" value="测试完成" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="270" y="680" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="start" target="stage1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="140" as="sourcePoint" />
+            <mxPoint x="700" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage1" target="stage2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="240" as="sourcePoint" />
+            <mxPoint x="700" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage2" target="stage3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="340" as="sourcePoint" />
+            <mxPoint x="700" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage3" target="stage4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="440" as="sourcePoint" />
+            <mxPoint x="700" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn5" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage4" target="stage5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="540" as="sourcePoint" />
+            <mxPoint x="700" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn6" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage5" target="stage6" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="640" as="sourcePoint" />
+            <mxPoint x="700" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn7" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage6" target="stage7" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="740" as="sourcePoint" />
+            <mxPoint x="700" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" source="stage7" target="end" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="840" as="sourcePoint" />
+            <mxPoint x="700" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="stage1_detail" value="阶段1详细任务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=10" parent="1" vertex="1">
+          <mxGeometry x="250" y="145" width="320" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_task1" value="创建安全组" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="270" y="185" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_task2" value="启动Aurora集群" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="370" y="185" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_task3" value="创建数据库实例" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="470" y="185" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_task4" value="启动堡垒机" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="320" y="235" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#6c8ebf" parent="1" source="s1_task1" target="s1_task2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="200" as="sourcePoint" />
+            <mxPoint x="370" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s1_conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#6c8ebf" parent="1" source="s1_task2" target="s1_task3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="200" as="sourcePoint" />
+            <mxPoint x="470" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s1_conn3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#6c8ebf" parent="1" source="s1_task2" target="s1_task4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="215" as="sourcePoint" />
+            <mxPoint x="360" y="235" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="stage3_detail" value="阶段3详细任务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=10" parent="1" vertex="1">
+          <mxGeometry x="250" y="340" width="320" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_task1" value="创建测试数据库" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="270" y="380" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_task2" value="生成8张表" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="370" y="380" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_task3" value="插入1600万记录" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="470" y="380" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_task4" value="创建索引" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="320" y="430" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9673a6" parent="1" source="s3_task1" target="s3_task2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="395" as="sourcePoint" />
+            <mxPoint x="370" y="395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3_conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9673a6" parent="1" source="s3_task2" target="s3_task3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="395" as="sourcePoint" />
+            <mxPoint x="470" y="395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3_conn3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9673a6" parent="1" source="s3_task3" target="s3_task4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="510" y="410" as="sourcePoint" />
+            <mxPoint x="360" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="stage4_detail" value="阶段4性能测试循环" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=10;arcSize=6;" parent="1" vertex="1">
+          <mxGeometry x="860" y="147" width="370" height="593" as="geometry" />
+        </mxCell>
+        <mxCell id="r6g_test" value="测试r6g实例&#xa;(Graviton2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="900" y="209" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="r7g_test" value="测试r7g实例&#xa;(Graviton3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ccffcc;strokeColor=#36393d;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="900" y="425" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="r8g_test" value="测试r8g实例&#xa;(Graviton4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffccff;strokeColor=#36393d;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="900" y="640" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="single_test_detail" value="单实例测试流程" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=10" parent="1" vertex="1">
+          <mxGeometry x="1075" y="210" width="130" height="477" as="geometry" />
+        </mxCell>
+        <mxCell id="failover" value="执行failover" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="1100" y="271" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="test32" value="32线程测试&#xa;(3分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="1100" y="362" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="test64" value="64线程测试&#xa;(3分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="1100" y="454" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="test128" value="128线程测试&#xa;(3分钟)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="1100" y="570" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="perf_conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#b85450" parent="1" source="r6g_test" target="r7g_test" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="960" y="410" as="sourcePoint" />
+            <mxPoint x="960" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="perf_conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#b85450" parent="1" source="r7g_test" target="r8g_test" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="960" y="530" as="sourcePoint" />
+            <mxPoint x="960" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="single_conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#d6b656" parent="1" source="failover" target="test32" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1180" y="395" as="sourcePoint" />
+            <mxPoint x="1200" y="395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="single_conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#d6b656" parent="1" source="test32" target="test64" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1240" y="420" as="sourcePoint" />
+            <mxPoint x="1140" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="single_conn3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#d6b656" parent="1" source="test64" target="test128" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1180" y="470" as="sourcePoint" />
+            <mxPoint x="1200" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="detail_conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#666666;dashed=1" parent="1" source="stage1" target="stage1_detail" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="210" as="sourcePoint" />
+            <mxPoint x="340" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="detail_conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#666666;dashed=1" parent="1" source="stage3" target="stage3_detail" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="410" as="sourcePoint" />
+            <mxPoint x="340" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="detail_conn3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#666666;dashed=1;entryX=0;entryY=0.609;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="stage4" target="stage4_detail" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="510" as="sourcePoint" />
+            <mxPoint x="900" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="time_label" value="总测试时间: ~80分钟" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#e74c3c" parent="1" vertex="1">
+          <mxGeometry x="250" y="102" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="图例说明" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=10" parent="1" vertex="1">
+          <mxGeometry x="250" y="520" width="318" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1" value="主流程" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#2c3e50" parent="1" vertex="1">
+          <mxGeometry x="290" y="550" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_line1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#2c3e50" parent="1" edge="1">
+          <mxGeometry width="50" height="20" relative="1" as="geometry">
+            <mxPoint x="270" y="560" as="sourcePoint" />
+            <mxPoint x="285" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend2" value="详细任务" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666" parent="1" vertex="1">
+          <mxGeometry x="290" y="580" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_line2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#666666;dashed=1" parent="1" edge="1">
+          <mxGeometry width="50" height="20" relative="1" as="geometry">
+            <mxPoint x="270" y="590" as="sourcePoint" />
+            <mxPoint x="285" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
